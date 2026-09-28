@@ -10,7 +10,7 @@ plugins {
 
 android {
   namespace = "com.example"
-  compileSdk { version = release(36) { minorApiLevel = 1 } }
+  compileSdk = 36
 
   defaultConfig {
     applicationId = "com.aistudio.camera.pxlkvd"
@@ -40,6 +40,7 @@ android {
 
   buildTypes {
     debug {
+      signingConfig = signingConfigs.getByName("debugConfig")
     }
     release {
       isCrunchPngs = false
@@ -118,8 +119,8 @@ dependencies {
   implementation(libs.androidx.lifecycle.runtime.ktx)
   implementation(libs.androidx.lifecycle.viewmodel.compose)
   // implementation(libs.androidx.navigation.compose)
-  implementation(libs.androidx.room.ktx)
-  implementation(libs.androidx.room.runtime)
+  // implementation(libs.androidx.room.ktx)
+  // implementation(libs.androidx.room.runtime)
   implementation(libs.coil.compose)
   implementation(libs.converter.moshi)
   implementation(libs.firebase.ai)
@@ -141,12 +142,12 @@ dependencies {
   implementation(libs.okhttp)
   // implementation(libs.play.services.location)
   implementation(libs.retrofit)
-  implementation(libs.mlkit.objectdetector)
-  implementation(libs.mlkit.segmentation.selfie)
-  implementation(libs.onnxruntime.android)
-  implementation(libs.tensorflow.lite)
-  implementation(libs.tensorflow.lite.gpu)
-  implementation(libs.tensorflow.lite.gpu.api)
+  // implementation(libs.mlkit.objectdetector)
+  // implementation(libs.mlkit.segmentation.selfie)
+  // implementation(libs.onnxruntime.android)
+  // implementation(libs.tensorflow.lite)
+  // implementation(libs.tensorflow.lite.gpu)
+  // implementation(libs.tensorflow.lite.gpu.api)
   testImplementation(libs.androidx.compose.ui.test.junit4)
   testImplementation(libs.androidx.core)
   testImplementation(libs.androidx.junit)
@@ -160,6 +161,6 @@ dependencies {
   androidTestImplementation(libs.androidx.runner)
   debugImplementation(libs.androidx.compose.ui.test.manifest)
   debugImplementation(libs.androidx.compose.ui.tooling)
-  "ksp"(libs.androidx.room.compiler)
+  // "ksp"(libs.androidx.room.compiler)
   "ksp"(libs.moshi.kotlin.codegen)
 }

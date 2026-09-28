@@ -2,13 +2,13 @@ package com.example
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
-import com.example.camera.model.BokehStyle
-import com.example.camera.model.CameraMode
-import com.example.camera.model.CinemaConfig
-import com.example.camera.model.CinematicLut
-import com.example.camera.model.HardwareCapabilities
-import com.example.camera.model.PhotoMegapixelMode
-import com.example.camera.model.PortraitConfig
+import com.example.camera.LevelState
+import com.example.model.CameraModeGroup
+import com.example.model.CinemaModeSettings
+import com.example.model.FlashMode
+import com.example.model.PhotoMode
+import com.example.model.PortraitModeSettings
+import com.example.model.VideoMode
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -39,32 +39,23 @@ class ExampleRobolectricTest {
   }
 
   @Test
-  fun `test oppo camera modes and configurations`() {
-    val cinema = CinemaConfig()
-    assertEquals(24, cinema.videoFps)
-    assertEquals(CinematicLut.REC_709, cinema.selectedLut)
-    assertTrue(cinema.isLutPreviewEnabled)
+  fun `test camera modes and configurations`() {
+    val cinema = CinemaModeSettings()
+    assertEquals(24, cinema.frameRate.fps)
 
-    val portrait = PortraitConfig()
-    assertEquals(BokehStyle.NATURAL_ROUND, portrait.bokehStyle)
-    assertEquals("f/1.4", portrait.simulatedAperture)
-    assertTrue(portrait.opticalBlurGuided)
+    val portrait = PortraitModeSettings()
+    assertEquals("f/2.0", portrait.apertureValue)
 
-    val photoMegapixelMode = PhotoMegapixelMode.M50
-    assertEquals("50M", photoMegapixelMode.label)
-    assertEquals(50, photoMegapixelMode.megapixels)
-
-    val photo12M = PhotoMegapixelMode.M12
-    assertEquals("12M", photo12M.label)
+    assertEquals(CameraModeGroup.PHOTO, CameraModeGroup.valueOf("PHOTO"))
+    assertEquals(PhotoMode.PHOTO, PhotoMode.PHOTO)
+    assertEquals(VideoMode.VIDEO, VideoMode.VIDEO)
+    assertEquals(FlashMode.OFF, FlashMode.OFF)
   }
 
   @Test
-  fun `test zoom presets and lens capabilities`() {
-    val caps = HardwareCapabilities(
-      minZoom = 1.0f,
-      maxZoom = 10f
-    )
-    assertEquals(1.0f, caps.minZoom)
-    assertEquals(10f, caps.maxZoom)
+  fun `test level state`() {
+    val level = LevelState(rollAngle = 0f, isLevel = true)
+    assertEquals(0f, level.rollAngle)
+    assertTrue(level.isLevel)
   }
 }

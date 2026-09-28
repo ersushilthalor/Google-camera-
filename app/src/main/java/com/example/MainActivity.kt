@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.camera.crash.CrashHandler
-import com.example.camera.ui.CameraScreen
-import com.example.camera.viewmodel.CameraViewModel
+import com.example.ui.CameraScreen
+import com.example.ui.CameraViewModel
 import com.example.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
