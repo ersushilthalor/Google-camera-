@@ -1,0 +1,6 @@
+{
+  "name": "Camera",
+  "description": "Professional camera app matching reference design with photo & video mode groups, Camera2 pipelines, horizon leveling, and zoom controls.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

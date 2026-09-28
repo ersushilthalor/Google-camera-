@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Camera</string>
+    <string name="mode_photo">Photo</string>
+    <string name="mode_portrait">Portrait</string>
+    <string name="mode_night">Night Sight</string>
+    <string name="mode_video">Video</string>
+    <string name="mode_slow_motion">Slow Motion</string>
+    <string name="mode_cinema">Cinema</string>
+    <string name="camera_settings">Camera Settings</string>
+    <string name="camera_tuning">Pro Controls</string>
+    <string name="switch_camera">Switch camera</string>
+    <string name="take_photo">Take photo</string>
+    <string name="record_video">Record video</string>
+    <string name="gallery">Gallery</string>
+</resources>
