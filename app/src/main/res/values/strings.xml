@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Camera</string>
+    <string name="video_adjustments">Video Adjustments</string>
+    <string name="reset">Reset</string>
+    <string name="basic">Basic</string>
+    <string name="advanced">Advanced</string>
     <string name="mode_photo">Photo</string>
     <string name="mode_portrait">Portrait</string>
     <string name="mode_night">Night Sight</string>

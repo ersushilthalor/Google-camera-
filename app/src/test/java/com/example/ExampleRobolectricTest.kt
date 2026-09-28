@@ -2,7 +2,15 @@ package com.example
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
+import com.example.camera.model.BokehStyle
+import com.example.camera.model.CameraMode
+import com.example.camera.model.CinemaConfig
+import com.example.camera.model.CinematicLut
+import com.example.camera.model.HardwareCapabilities
+import com.example.camera.model.PhotoMegapixelMode
+import com.example.camera.model.PortraitConfig
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -31,49 +39,32 @@ class ExampleRobolectricTest {
   }
 
   @Test
-  fun `test mode specific settings and cinema profiles`() {
-    val cinema = com.example.model.CinemaModeSettings()
-    assertEquals(com.example.model.VideoResolution.UHD_4K, cinema.resolution)
-    assertEquals(com.example.model.CinemaFps.FPS_24, cinema.frameRate)
-    assertEquals(com.example.model.CinemaLogProfile.C_LOG, cinema.logProfile)
-    assertEquals(true, cinema.applyLutToExportedVideo)
+  fun `test oppo camera modes and configurations`() {
+    val cinema = CinemaConfig()
+    assertEquals(24, cinema.videoFps)
+    assertEquals(CinematicLut.REC_709, cinema.selectedLut)
+    assertTrue(cinema.isLutPreviewEnabled)
 
-    val photo = com.example.model.PhotoModeSettings()
-    assertEquals(com.example.model.PhotoResolution.RES_50MP, photo.resolution)
-    assertEquals(com.example.model.PhotoAspectRatio.RATIO_4_3, photo.aspectRatio)
+    val portrait = PortraitConfig()
+    assertEquals(BokehStyle.NATURAL_ROUND, portrait.bokehStyle)
+    assertEquals("f/1.4", portrait.simulatedAperture)
+    assertTrue(portrait.opticalBlurGuided)
 
-    val portrait = com.example.model.PortraitModeSettings()
-    assertEquals(com.example.model.PortraitBlurStyle.DISC_BOKEH, portrait.blurStyle)
+    val photoMegapixelMode = PhotoMegapixelMode.M50
+    assertEquals("50M", photoMegapixelMode.label)
+    assertEquals(50, photoMegapixelMode.megapixels)
 
-    val video = com.example.model.VideoModeSettings()
-    assertEquals(com.example.model.VideoFps.FPS_30, video.frameRate)
-
-    val slowMo = com.example.model.SlowMotionModeSettings()
-    assertEquals(com.example.model.SlowMotionFps.FPS_120, slowMo.frameRate)
+    val photo12M = PhotoMegapixelMode.M12
+    assertEquals("12M", photo12M.label)
   }
 
   @Test
   fun `test zoom presets and lens capabilities`() {
-    val caps = com.example.camera.CameraHardwareCapabilities(
-      hasBackCamera = true,
-      hasUltraWideLens = false,
-      ultraWideStatusDescription = "Not exposed by device hardware (Single main camera detected)",
-      availableLensesDescription = "Wide (4.5mm, 1×)"
+    val caps = HardwareCapabilities(
+      minZoom = 1.0f,
+      maxZoom = 10f
     )
-    assertEquals(false, caps.hasUltraWideLens)
-    assertEquals("Not exposed by device hardware (Single main camera detected)", caps.ultraWideStatusDescription)
-
-    val capsWithUw = com.example.camera.CameraHardwareCapabilities(
-      hasBackCamera = true,
-      hasUltraWideLens = true,
-      ultraWideCameraId = "2",
-      ultraWideFocalLength = 1.8f,
-      ultraWideFov = 115f,
-      ultraWideZoomRatio = 0.6f,
-      ultraWideStatusDescription = "Detected (Camera ID: 2, 1.8mm, 115° FOV)"
-    )
-    assertEquals(true, capsWithUw.hasUltraWideLens)
-    assertEquals("2", capsWithUw.ultraWideCameraId)
-    assertEquals(0.6f, capsWithUw.ultraWideZoomRatio)
+    assertEquals(1.0f, caps.minZoom)
+    assertEquals(10f, caps.maxZoom)
   }
 }

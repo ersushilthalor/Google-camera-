@@ -39,11 +39,24 @@ android {
   }
 
   buildTypes {
+    debug {
+      signingConfig = signingConfigs.getByName("debugConfig")
+    }
     release {
       isCrunchPngs = false
       isMinifyEnabled = false
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
       signingConfig = signingConfigs.getByName("release")
+    }
+  }
+  packaging {
+    resources {
+      excludes += listOf(
+        "/META-INF/{AL2.0,LGPL2.1}",
+        "/META-INF/DEPENDENCIES",
+        "/META-INF/LICENSE*",
+        "/META-INF/NOTICE*"
+      )
     }
   }
   compileOptions {
@@ -61,11 +74,23 @@ android {
   }
 }
 
+// Ensure a safe empty fallback properties file exists in the build cache directory
+// so that neither .env nor .env.example is strictly required for Gradle/APK builds.
+val fallbackSecretsFile = file("${rootDir}/build/secrets.defaults.properties")
+if (!fallbackSecretsFile.exists()) {
+  fallbackSecretsFile.parentFile?.mkdirs()
+  fallbackSecretsFile.createNewFile()
+}
+
 // Configure the Secrets Gradle Plugin to use .env and .env.example files
 // to match the convention used in Web projects.
 secrets {
   propertiesFileName = ".env"
-  defaultPropertiesFileName = ".env.example"
+  defaultPropertiesFileName = if (file("${rootDir}/.env.example").exists()) {
+    ".env.example"
+  } else {
+    "build/secrets.defaults.properties"
+  }
   ignoreList.add("FIREBASE_APPCHECK_DEBUG_TOKEN")
 }
 
@@ -117,6 +142,12 @@ dependencies {
   implementation(libs.okhttp)
   // implementation(libs.play.services.location)
   implementation(libs.retrofit)
+  implementation(libs.mlkit.objectdetector)
+  implementation(libs.mlkit.segmentation.selfie)
+  implementation(libs.onnxruntime.android)
+  implementation(libs.tensorflow.lite)
+  implementation(libs.tensorflow.lite.gpu)
+  implementation(libs.tensorflow.lite.gpu.api)
   testImplementation(libs.androidx.compose.ui.test.junit4)
   testImplementation(libs.androidx.core)
   testImplementation(libs.androidx.junit)
